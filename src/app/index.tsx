@@ -1,15 +1,39 @@
-import { View } from 'react-native';
-import { Category } from '../components/Category';
-import { Header } from '../components/Header';
+import { useState } from 'react';
+import { FlatList, View } from 'react-native';
+
+import { Header } from '@/components/Header';
+
+import { Category } from '@/components/Category';
+
+import { CATEGORIES } from '@/utils/data/products';
 
 
 export default function Home() {
+
+  const [category, setCategory] = useState(CATEGORIES[0]);
+
+  const handleCategorySelect = (selectedCategory: string) => {
+    setCategory(selectedCategory);
+  };
+
+
   return (
     <View className="flex-1 pt-8" >
       <Header title='Faça seu pedido' cartQuantityItems={5} />
-      <View className='flex-row'>
-        <Category title='Lanche do dia' />
-      </View>
+
+      <FlatList
+        data={CATEGORIES}
+        keyExtractor={(item) => item}
+        renderItem={
+          ({ item }) =>
+            (<Category title={item} isSelected={item === category} onPress={() => handleCategorySelect(item)} />)
+        }
+        horizontal
+        className='max-h-10 mt-5'
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ gap: 12, paddingHorizontal: 20 }}
+      />
+
     </View>
   );
 }
