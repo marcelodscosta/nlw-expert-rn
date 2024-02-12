@@ -8,6 +8,8 @@ import { LinkButton } from '@/components/Link-Button';
 import { useCartStore } from '@/stores/cart-store';
 import { Feather } from '@expo/vector-icons';
 
+import { Redirect } from 'expo-router';
+
 type ProductProps = {
   id: string,
 };
@@ -20,11 +22,15 @@ export default function Product() {
 
   const { id } = useLocalSearchParams<ProductProps>();
 
-  const product = PRODUCTS.filter((item) => item.id === id)[0]
+  const product = PRODUCTS.find((item) => item.id === id)
 
   function handleAddToCart() {
-    cartStore.add(product);
+    cartStore.add(product!);
     nativation.goBack();
+  }
+
+  if (!product) {
+    return <Redirect href={'/'} />
   }
 
   return (
@@ -36,6 +42,7 @@ export default function Product() {
       />
 
       <View className='p-5 mt-8 flex-1'>
+        <Text className='text-white text-lx font-heading'>{product.title}</Text>
         <Text className='text-lime-400 text-2xl font-heading my-2'>{formatCurrency(product.price)}</Text>
 
         <Text className='text-slate-400 font-body text-base mb-6'>{product.description}</Text>
