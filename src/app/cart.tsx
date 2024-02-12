@@ -10,9 +10,31 @@ import { Product } from "@/components/Product";
 import { ProductCartProps, useCartStore } from "@/stores/cart-store";
 import { formatCurrency } from "@/utils/functions/format-currency";
 import { Feather } from "@expo/vector-icons";
+import { useState } from "react";
 
 
 export default function Cart() {
+
+  const [address, setAddress] = useState("");
+
+  function handleOrder() {
+    if (address.trim().length === 0) {
+      return Alert.alert('Pedido', 'Informe os dados da entrega.');
+    }
+
+    const products = cartStore.products.map((product) => `\n ${product.quantity} ${product.title}`)
+      .join("")
+
+    const message = `
+      NOVO PEDIDO
+      \n Entregar em: ${address}
+      ${products}
+      \n Valor total: ${total}
+      `;
+    console.log(message);
+
+  }
+
 
   const cartStore = useCartStore();
 
@@ -48,12 +70,15 @@ export default function Cart() {
               <Text className="text-white text-xl font-subtitle">Total:</Text>
               <Text className="text-lime-400 text-2xl font-heading">{total}</Text>
             </View>
-            <Input placeholder="Informe o endereço de entrega com rua, bairro, cep, número e complemento" />
+            <Input
+              placeholder="Informe o endereço de entrega com rua, bairro, cep, número e complemento"
+              onChangeText={setAddress}
+            />
           </View>
         </ScrollView>
       </KeyboardAwareScrollView>
       <View className="p-5 gap-5">
-        <Button>
+        <Button onPress={handleOrder}>
           <Button.Text>
             Enviar Pedido
           </Button.Text>
