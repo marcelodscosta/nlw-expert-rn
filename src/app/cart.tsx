@@ -12,8 +12,12 @@ import { formatCurrency } from "@/utils/functions/format-currency";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
+import { useNavigation } from "expo-router";
+
 
 export default function Cart() {
+
+  const navigation = useNavigation();
 
   const [address, setAddress] = useState("");
 
@@ -32,7 +36,8 @@ export default function Cart() {
       \n Valor total: ${total}
       `;
     console.log(message);
-
+    cartStore.clear();
+    navigation.goBack();
   }
 
 
