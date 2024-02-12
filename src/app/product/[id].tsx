@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { PRODUCTS } from '@/utils/data/products';
 import { formatCurrency } from '@/utils/functions/format-currency';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { Image, Text, View } from "react-native";
 
 import { LinkButton } from '@/components/Link-Button';
@@ -14,6 +14,8 @@ type ProductProps = {
 
 export default function Product() {
 
+  const nativation = useNavigation();
+
   const cartStore = useCartStore();
 
   const { id } = useLocalSearchParams<ProductProps>();
@@ -22,7 +24,7 @@ export default function Product() {
 
   function handleAddToCart() {
     cartStore.add(product);
-
+    nativation.goBack();
   }
 
   return (
