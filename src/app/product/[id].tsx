@@ -4,6 +4,7 @@ import { formatCurrency } from '@/utils/functions/format-currency';
 import { useLocalSearchParams } from 'expo-router';
 import { Image, Text, View } from "react-native";
 
+import { LinkButton } from '@/components/Link-Button';
 import { Feather } from '@expo/vector-icons';
 
 type ProductProps = {
@@ -45,6 +46,8 @@ export default function Product() {
             Adicionar ao pedido
           </Button.Text>
         </Button>
+
+        <LinkButton title='Voltar ao cardápio' href='/' />
       </View>
 
     </View>
