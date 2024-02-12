@@ -22,8 +22,6 @@ export default function Home() {
 
   const cartQuantityItems = cartStore.products.reduce((total, product) => total + product.quantity, 0)
 
-  console.log(cartQuantityItems);
-
 
   const handleCategorySelect = (selectedCategory: string) => {
     setCategory(selectedCategory);
